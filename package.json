@@ -48,12 +48,20 @@
     "eslint-plugin-vitest": "^0.5.4",
     "husky": "^9.1.7",
     "jsdom": "^27.0.0",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.5.3",
     "rollup-plugin-visualizer": "^6.0.5",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "pnpm lint --fix",
+      "pnpm check"
+    ],
+    "*": "pnpm format --ignore-unknown --write"
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }
