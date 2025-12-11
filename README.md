@@ -21,10 +21,14 @@
 
 ### Screens
 
-- List page
+- List page (/)
   - CRUD
   - Share
-- Slide Editor
+- Slides Overview (/[slug])
+  - Share
+  - Presence avatars
+
+* Slides Editor (/[slug]/[slide])
   - Share
   - Presence avatars
   - Editor
