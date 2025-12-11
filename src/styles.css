@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+body {
+  @apply m-0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* ========================================
+   CONFIGURATION
+   ======================================== */
+
+:root {
+  /* Animation timing */
+  --vt-duration: 500ms;
+  --vt-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --vt-animation: var(--vt-duration) var(--vt-easing) both;
+
+  /* Z-index stacking order */
+  --z-nav: 1000;
+  --z-pages: 2;
+  --z-home: 1;
+}
+
+@import "./transitions.css";
+@import "./keyframes.css";

@@ -1,0 +1,80 @@
+/* ========================================
+   DISABLE DEFAULT ANIMATIONS
+   ======================================== */
+
+/* Disable root cross-fade */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Keep navigation static and on top */
+::view-transition-group(nav-overlay) {
+  z-index: var(--z-nav);
+}
+
+::view-transition-old(nav-overlay),
+::view-transition-new(nav-overlay) {
+  animation: none;
+}
+
+/* ========================================
+   Z-INDEX STACKING ORDER
+   ======================================== */
+
+::view-transition-group(home-content) {
+  z-index: var(--z-home);
+}
+
+::view-transition-group(left-content),
+::view-transition-group(right-content),
+::view-transition-group(bottom-content) {
+  z-index: var(--z-pages);
+}
+
+/* ========================================
+   SLIDE ANIMATIONS
+   Applied to all slide transition types
+   ======================================== */
+
+html:is(
+  :active-view-transition-type(slide-left),
+  :active-view-transition-type(slide-right),
+  :active-view-transition-type(slide-top),
+  :active-view-transition-type(slide-bottom)
+) {
+  /* Home content stays static (no animation) */
+  &::view-transition-old(home-content),
+  &::view-transition-new(home-content) {
+    animation: none;
+  }
+
+  /* Pages always exit in their designated direction */
+  &::view-transition-old(left-content) {
+    animation: var(--vt-animation) slide-out-left;
+  }
+
+  &::view-transition-old(right-content) {
+    animation: var(--vt-animation) slide-out-right;
+  }
+
+  &::view-transition-old(bottom-content) {
+    animation: var(--vt-animation) slide-out-bottom;
+  }
+}
+
+/* Pages slide in from their designated direction */
+/* prettier-ignore */
+html:active-view-transition-type(slide-left)::view-transition-new(left-content) {
+  animation: var(--vt-animation) slide-in-left;
+}
+
+/* prettier-ignore */
+html:active-view-transition-type(slide-right)::view-transition-new(right-content) {
+  animation: var(--vt-animation) slide-in-right;
+}
+
+/* prettier-ignore */
+html:active-view-transition-type(slide-bottom)::view-transition-new(bottom-content) {
+  animation: var(--vt-animation) slide-in-bottom;
+}
