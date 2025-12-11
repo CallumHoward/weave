@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - run: pnpm lint --fix {staged_files}
+      glob: "*.{ts,tsx}"
+    - run: pnpm format --write {staged_files}
+      glob: "*.{ts,tsx}"
+    - run: pnpm check
+      glob: "*.{ts,tsx}"
