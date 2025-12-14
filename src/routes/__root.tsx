@@ -3,7 +3,6 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
-import { NavigationOverlay } from "@/components/NavigationOverlay";
 import { NotFound } from "@/components/NotFound";
 
 export const Route = createRootRoute({
@@ -41,7 +40,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="bg-black text-white">
         {children}
-        <NavigationOverlay />
         <TanStackDevtools
           config={{
             position: "bottom-right",
