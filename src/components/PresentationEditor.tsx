@@ -1,8 +1,29 @@
-import { useOthers } from "@liveblocks/react";
+import { useOthers, useUpdateMyPresence } from "@liveblocks/react";
+import { Cursor } from "./Cursor";
+import { getCursorColor } from "@/lib/get-user-color";
 
 export function PresentationEditor() {
   const others = useOthers();
-  const userCount = others.length;
+  const updateMyPresence = useUpdateMyPresence();
 
-  return <div>There are {userCount} other user(s) online</div>;
+  return (
+    <div
+      className="flex-1 min-h-0 w-full bg-gray-50"
+      onPointerMove={(e) =>
+        updateMyPresence({ cursor: { x: e.clientX, y: e.clientY } })
+      }
+      onPointerLeave={() => updateMyPresence({ cursor: null })}
+    >
+      {others.map(({ connectionId, presence, id }) =>
+        presence.cursor ? (
+          <Cursor
+            key={connectionId}
+            x={presence.cursor.x}
+            y={presence.cursor.y}
+            color={getCursorColor(id)}
+          />
+        ) : null,
+      )}
+    </div>
+  );
 }

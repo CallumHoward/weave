@@ -29,7 +29,7 @@ function App() {
   };
 
   return (
-    <div className="flex-1 flex-col gap-8 p-8 md:flex max-w-[1200px] mx-auto">
+    <div className="flex-1 flex-col gap-8 p-8 md:flex max-w-[1200px]">
       <Header title="Presentations" />
       <main>
         {error ? (
