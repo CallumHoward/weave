@@ -1,5 +1,6 @@
 import { useStorage } from "@liveblocks/react";
 import { useEffect, useState } from "react";
+import { Textarea as BaseTextarea } from "./ui/textarea";
 import type { RefObject } from "react";
 import type { ToolMode } from "@/types/tool-modes";
 
@@ -12,6 +13,7 @@ type Props = {
     e: React.PointerEvent<HTMLTextAreaElement>,
     id: string,
   ) => void;
+  onBlur: () => void;
 };
 
 export function Textarea({
@@ -20,6 +22,7 @@ export function Textarea({
   toolMode,
   currentSlide,
   onPointerDown,
+  onBlur,
 }: Props) {
   const { x, y, content, slide } =
     useStorage((root) => root.textAreas.get(id)) ?? {};
@@ -53,13 +56,16 @@ export function Textarea({
   }
 
   return (
-    <textarea
-      className={`absolute select-none ${toolMode === "select" ? "cursor-move" : ""}`}
+    <BaseTextarea
+      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""}`}
       style={{ transform: `translate(${scaledX}px, ${scaledY}px)` }}
       onPointerDown={(e) => onPointerDown(e, id)}
-      readOnly={toolMode === "text"}
+      onClick={(e) => e.stopPropagation()}
+      onBlur={onBlur}
+      placeholder="Your text here"
+      readOnly={toolMode !== "text"}
     >
       {content}
-    </textarea>
+    </BaseTextarea>
   );
 }

@@ -73,9 +73,9 @@ export function PresentationEditor({ initialSlide }: Props) {
       const rect = e.currentTarget.getBoundingClientRect();
       const id = crypto.randomUUID();
       const newTextArea = new LiveObject({
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
-        content: "foo " + id,
+        x: (e.clientX - rect.left - rect.width / 2) / rect.width,
+        y: (e.clientY - rect.top - rect.height / 2) / rect.height,
+        content: "bar",
         slide: currentSlide,
       });
       storage.get("textAreas").set(id, newTextArea);
@@ -239,6 +239,7 @@ export function PresentationEditor({ initialSlide }: Props) {
                   toolMode={toolMode}
                   currentSlide={currentSlide}
                   onPointerDown={onTextAreaPointerDown}
+                  onBlur={() => setToolMode("select")}
                 />
               );
             })}
