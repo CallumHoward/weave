@@ -1,12 +1,22 @@
 import { useOthers, useUpdateMyPresence } from "@liveblocks/react";
+import { useNavigate } from "@tanstack/react-router";
 import { Cursor } from "./Cursor";
 import { getCursorColor } from "@/lib/get-user-color";
 
 export function PresentationEditor() {
   const others = useOthers();
   const updateMyPresence = useUpdateMyPresence();
+  const navigate = useNavigate();
 
   const totalSlides = 10;
+
+  const handleScrollEnd = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const slideWidth = container.clientWidth + 8; // width + gap-2 (8px)
+    const activeSlide = Math.round(scrollLeft / slideWidth) + 1;
+    navigate({ hash: String(activeSlide), replace: true });
+  };
 
   return (
     <div
@@ -27,6 +37,7 @@ export function PresentationEditor() {
         id="slides"
         className="@container/slides flex gap-2 overflow-x-auto h-full w-full snap-x snap-mandatory scroll-smooth"
         style={{ WebkitOverflowScrolling: "touch" }}
+        onScrollEnd={handleScrollEnd}
         role="region"
         aria-label="Slideshow"
         aria-live="polite"
