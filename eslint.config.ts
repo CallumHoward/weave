@@ -24,8 +24,12 @@ export default defineConfig([
       unicorn.configs.recommended,
       prettier,
     ],
+  },
+  {
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "unicorn/filename-case": "off",
+      "unicorn/prevent-abbreviations": "off",
     },
   },
   {
