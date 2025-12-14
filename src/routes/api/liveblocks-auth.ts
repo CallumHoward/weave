@@ -10,7 +10,14 @@ export const Route = createFileRoute("/api/liveblocks-auth")({
         });
 
         // TODO get user from DB
-        const user = { id: "user1", organization: "org1", metadata: {} };
+        const user = {
+          id: "user1",
+          organization: "org1",
+          metadata: {
+            name: "Callum Howard",
+            avatar: "https://github.com/CallumHoward.png",
+          },
+        };
 
         const session = liveblocks.prepareSession(
           user.id,

@@ -1,5 +1,16 @@
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
+
+import type { LiveMap, LiveObject } from "@liveblocks/client";
+
+type TextArea = LiveObject<{
+  x: number;
+  y: number;
+  content: string;
+}>;
+
+type TextAreaId = string;
+
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.
@@ -7,12 +18,12 @@ declare global {
       // Example, real-time cursor coordinates
       cursor: { x: number; y: number } | null;
       slide: number;
+      selectedTextAreaId: TextAreaId | null;
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
     Storage: {
-      // Example, a conflict-free list
-      // animals: LiveList<string>;
+      textAreas: LiveMap<TextAreaId, TextArea>;
     };
 
     // Custom user info set when authenticating with a secret key
@@ -20,8 +31,8 @@ declare global {
       id: string;
       info: {
         // Example properties, for useSelf, useUser, useOthers, etc.
-        // name: string;
-        // avatar: string;
+        name: string;
+        avatar: string;
       };
     };
 

@@ -4,6 +4,7 @@ import {
   RoomProvider,
 } from "@liveblocks/react/suspense";
 import { createFileRoute, useLocation } from "@tanstack/react-router";
+import { LiveMap } from "@liveblocks/client";
 import type { PresentationItem } from "@/types/presentation-item";
 import { Header } from "@/components/Header";
 import { PresentationEditor } from "@/components/PresentationEditor";
@@ -44,7 +45,12 @@ function RouteComponent() {
           <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"}>
             <RoomProvider
               id={presentation.id}
-              initialPresence={{ cursor: null, slide }}
+              initialPresence={{
+                cursor: null,
+                slide,
+                selectedTextAreaId: null,
+              }}
+              initialStorage={{ textAreas: new LiveMap() }}
             >
               <ClientSideSuspense fallback={<div>Loading…</div>}>
                 <PresentationEditor initialSlide={slide} />

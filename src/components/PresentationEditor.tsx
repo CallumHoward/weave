@@ -2,6 +2,8 @@ import { useOthers, useUpdateMyPresence } from "@liveblocks/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Cursor } from "./Cursor";
+import { FormattingToolbar } from "./FormattingToolbar";
+import type { ToolMode } from "@/types/tool-modes";
 import { getCursorColor } from "@/lib/get-user-color";
 
 type Props = {
@@ -14,6 +16,7 @@ export function PresentationEditor({ initialSlide }: Props) {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(initialSlide);
   const slidesRef = useRef<HTMLDivElement>(null);
+  const [toolMode, setToolMode] = useState<ToolMode>("select");
   const [slidesDimensions, setSlidesDimensions] = useState({
     width: 1,
     height: 1,
@@ -58,6 +61,12 @@ export function PresentationEditor({ initialSlide }: Props) {
       id="canvas"
       className="relative flex flex-1 min-h-0 w-full bg-gray-50 overflow-hidden items-center justify-center"
     >
+      <FormattingToolbar
+        className="absolute top-4 left-1/2 -translate-x-1/2"
+        toolMode={toolMode}
+        onClickToolMode={setToolMode}
+      />
+
       <div
         ref={slidesRef}
         id="slides"
