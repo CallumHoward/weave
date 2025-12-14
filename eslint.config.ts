@@ -30,6 +30,7 @@ export default defineConfig([
     rules: {
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
+      "unicorn/no-null": "off",
     },
   },
   {

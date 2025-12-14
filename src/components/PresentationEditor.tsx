@@ -1,6 +1,6 @@
 import { useOthers } from "@liveblocks/react";
 
-export function Room() {
+export function PresentationEditor() {
   const others = useOthers();
   const userCount = others.length;
 
