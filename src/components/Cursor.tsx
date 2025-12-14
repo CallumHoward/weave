@@ -16,6 +16,7 @@ export function Cursor({ x, y, color = "black" }: Props) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="animate-in zoom-in-50 duration-100"
       style={{
         position: "absolute",
         transform: `translate(${x}px, ${y}px)`,

@@ -8,10 +8,16 @@ export function PresentationEditor() {
 
   return (
     <div
-      className="flex-1 min-h-0 w-full bg-gray-50"
-      onPointerMove={(e) =>
-        updateMyPresence({ cursor: { x: e.clientX, y: e.clientY } })
-      }
+      className="relative flex-1 min-h-0 w-full bg-gray-50 overflow-hidden"
+      onPointerMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        updateMyPresence({
+          cursor: {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+          },
+        });
+      }}
       onPointerLeave={() => updateMyPresence({ cursor: null })}
     >
       {others.map(({ connectionId, presence, id }) =>
