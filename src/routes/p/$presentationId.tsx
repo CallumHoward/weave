@@ -37,7 +37,7 @@ function RouteComponent() {
         <p>Error: {error}</p>
       ) : (
         <>
-          <Header title={presentation.name} />
+          <Header title={presentation.name} backTo="/" />
           <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"}>
             <RoomProvider
               id={presentation.id}
