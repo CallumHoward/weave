@@ -11,8 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SlidesSlugRouteImport } from './routes/slides/[slug]'
 import { Route as PPresentationIdRouteImport } from './routes/p/$presentationId'
+import { Route as ApiLiveblocksAuthRouteImport } from './routes/api/liveblocks-auth'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -24,49 +24,54 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SlidesSlugRoute = SlidesSlugRouteImport.update({
-  id: '/slides/slug',
-  path: '/slides/slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PPresentationIdRoute = PPresentationIdRouteImport.update({
   id: '/p/$presentationId',
   path: '/p/$presentationId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLiveblocksAuthRoute = ApiLiveblocksAuthRouteImport.update({
+  id: '/api/liveblocks-auth',
+  path: '/api/liveblocks-auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/api/liveblocks-auth': typeof ApiLiveblocksAuthRoute
   '/p/$presentationId': typeof PPresentationIdRoute
-  '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/api/liveblocks-auth': typeof ApiLiveblocksAuthRoute
   '/p/$presentationId': typeof PPresentationIdRoute
-  '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/api/liveblocks-auth': typeof ApiLiveblocksAuthRoute
   '/p/$presentationId': typeof PPresentationIdRoute
-  '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/p/$presentationId' | '/slides/slug'
+  fullPaths: '/' | '/login' | '/api/liveblocks-auth' | '/p/$presentationId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/p/$presentationId' | '/slides/slug'
-  id: '__root__' | '/' | '/login' | '/p/$presentationId' | '/slides/slug'
+  to: '/' | '/login' | '/api/liveblocks-auth' | '/p/$presentationId'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/api/liveblocks-auth'
+    | '/p/$presentationId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  ApiLiveblocksAuthRoute: typeof ApiLiveblocksAuthRoute
   PPresentationIdRoute: typeof PPresentationIdRoute
-  SlidesSlugRoute: typeof SlidesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,18 +90,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/slides/slug': {
-      id: '/slides/slug'
-      path: '/slides/slug'
-      fullPath: '/slides/slug'
-      preLoaderRoute: typeof SlidesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/p/$presentationId': {
       id: '/p/$presentationId'
       path: '/p/$presentationId'
       fullPath: '/p/$presentationId'
       preLoaderRoute: typeof PPresentationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/liveblocks-auth': {
+      id: '/api/liveblocks-auth'
+      path: '/api/liveblocks-auth'
+      fullPath: '/api/liveblocks-auth'
+      preLoaderRoute: typeof ApiLiveblocksAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -105,8 +110,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  ApiLiveblocksAuthRoute: ApiLiveblocksAuthRoute,
   PPresentationIdRoute: PPresentationIdRoute,
-  SlidesSlugRoute: SlidesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

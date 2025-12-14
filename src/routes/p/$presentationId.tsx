@@ -12,14 +12,14 @@ export const Route = createFileRoute("/p/$presentationId")({
 });
 
 function RouteComponent() {
+  const { presentationId } = Route.useParams();
+
   return (
     <div className="flex-1 flex-col gap-8 p-8 md:flex max-w-[1200px] mx-auto">
       <Header title="Presentation Editor" />
 
-      <LiveblocksProvider
-        publicApiKey={import.meta.env.VITE_LIVEBLOCKS_PUBLIC_KEY}
-      >
-        <RoomProvider id="my-room">
+      <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"}>
+        <RoomProvider id={presentationId}>
           <ClientSideSuspense fallback={<div>Loading…</div>}>
             <Room />
           </ClientSideSuspense>
