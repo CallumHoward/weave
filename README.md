@@ -42,6 +42,8 @@
     "slug": "123",
     "author": "123",
     "name": "My Presentation",
+    "created_at": "123",
+    "modified_at": "123"
     "slides": [
       {
         "content": [

@@ -1,13 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { PresentationItem } from "@/types/presentation-item";
+import { listPresentations } from "@/data/presentations";
+import { DataTable, columns } from "@/components";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/")({
+  component: App,
+  loader: async (): Promise<{
+    presentations: Array<PresentationItem>;
+    error?: string;
+  }> => {
+    try {
+      const data = await listPresentations();
+      return { presentations: data };
+    } catch (error) {
+      console.error("Error fetching presentations:", error);
+      return { presentations: [], error: "Failed to load presentations" };
+    }
+  },
+});
 
 function App() {
+  const { presentations, error } = Route.useLoaderData();
+
   return (
-    <main className="flex justify-center items-center min-h-dvh [view-transition-name:home-content]">
-      <h1 className="uppercase flex flex-col">
-        <span className="text-8xl font-extralight uppercase">Weave</span>
-      </h1>
-    </main>
+    <>
+      <header className="flex items-center justify-between gap-2">
+        <h1>Presentations</h1>
+      </header>
+      <main>
+        {error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <DataTable columns={columns} data={presentations} />
+        )}
+      </main>
+    </>
   );
 }

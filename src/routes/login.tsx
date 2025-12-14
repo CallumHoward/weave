@@ -7,7 +7,7 @@ export const Route = createFileRoute("/login")({
 
 function RouteComponent() {
   return (
-    <main className="flex justify-center items-center min-h-dvh [view-transition-name:home-content]">
+    <main className="flex flex-col gap-8 justify-center items-center min-h-dvh [view-transition-name:home-content]">
       <h1 className="uppercase flex flex-col">
         <span className="text-8xl font-extralight uppercase">Weave</span>
       </h1>
