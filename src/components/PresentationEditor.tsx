@@ -96,7 +96,7 @@ export function PresentationEditor({ initialSlide }: Props) {
   const onTextAreaPointerDown = useMutation(
     (
       { setMyPresence },
-      e: React.PointerEvent<HTMLTextAreaElement>,
+      e: React.PointerEvent<HTMLDivElement>,
       textAreaId: string,
     ) => {
       history.pause();
@@ -139,6 +139,7 @@ export function PresentationEditor({ initialSlide }: Props) {
       if (!isDragging) {
         return;
       }
+      console.log("LOG Stage 1: PresentationEditor.tsx:142");
 
       const textAreaId = self.presence.selectedTextAreaId;
       if (!textAreaId) {
@@ -148,9 +149,8 @@ export function PresentationEditor({ initialSlide }: Props) {
       const textArea = storage.get("textAreas").get(textAreaId);
       if (textArea) {
         textArea.update({
-          // TODO account for scaling
-          x: e.clientX,
-          y: e.clientY,
+          x: (e.clientX - rect.left) / rect.width,
+          y: (e.clientY - rect.top) / rect.height,
         });
       }
     },
@@ -219,6 +219,7 @@ export function PresentationEditor({ initialSlide }: Props) {
                 <Textarea
                   key={id}
                   id={id}
+                  containerDimensions={slidesDimensions}
                   onPointerDown={onTextAreaPointerDown}
                 />
               );
