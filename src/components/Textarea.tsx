@@ -1,8 +1,9 @@
-import { useMutation, useSelf, useStorage } from "@liveblocks/react";
+import { useMutation, useOthers, useSelf, useStorage } from "@liveblocks/react";
 import { useEffect, useState } from "react";
 import { Textarea as BaseTextarea } from "./ui/textarea";
 import type { RefObject } from "react";
 import type { ToolMode } from "@/types/tool-modes";
+import { getCursorColor } from "@/lib/get-user-color";
 
 type Props = {
   id: string;
@@ -26,7 +27,10 @@ export function Textarea({
 }: Props) {
   const { x, y, content, slide } =
     useStorage((root) => root.textAreas.get(id)) ?? {};
-  const isSelected = useSelf((me) => me.presence.selectedTextAreaId === id);
+  const isSelectedByMe = useSelf((me) => me.presence.selectedTextAreaId === id);
+  const otherUserWithSelection = useOthers((others) =>
+    others.find((other) => other.presence.selectedTextAreaId === id),
+  );
   const [containerDimensions, setContainerDimensions] = useState({
     width: 1,
     height: 1,
@@ -66,10 +70,19 @@ export function Textarea({
     return;
   }
 
+  const borderColor = otherUserWithSelection
+    ? `var(${getCursorColor(otherUserWithSelection.id)})`
+    : isSelectedByMe
+      ? undefined
+      : "transparent";
+
   return (
     <BaseTextarea
-      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""} ${isSelected ? "" : "border-transparent focus:border-input"}`}
-      style={{ transform: `translate(${scaledX}px, ${scaledY}px)` }}
+      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""} ${isSelectedByMe && !otherUserWithSelection ? "" : otherUserWithSelection ? "border-2" : "border-transparent focus:border-input"}`}
+      style={{
+        transform: `translate(${scaledX}px, ${scaledY}px)`,
+        borderColor,
+      }}
       onPointerDown={(e) => onPointerDown(e, id)}
       onClick={(e) => e.stopPropagation()}
       onBlur={onBlur}
