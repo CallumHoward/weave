@@ -235,6 +235,7 @@ export function PresentationEditor({ initialSlide }: Props) {
                   key={id}
                   id={id}
                   containerRef={slidesRef}
+                  toolMode={toolMode}
                   onPointerDown={onTextAreaPointerDown}
                 />
               );

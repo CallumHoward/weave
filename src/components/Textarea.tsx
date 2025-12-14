@@ -1,14 +1,16 @@
 import { useStorage } from "@liveblocks/react";
 import { useEffect, useState } from "react";
 import type { RefObject } from "react";
+import type { ToolMode } from "@/types/tool-modes";
 
 type Props = {
   id: string;
   containerRef: RefObject<HTMLDivElement | null>;
+  toolMode: ToolMode;
   onPointerDown: (e: React.PointerEvent<HTMLDivElement>, id: string) => void;
 };
 
-export function Textarea({ id, containerRef, onPointerDown }: Props) {
+export function Textarea({ id, containerRef, toolMode, onPointerDown }: Props) {
   const { x, y, content } = useStorage((root) => root.textAreas.get(id)) ?? {};
   const [containerDimensions, setContainerDimensions] = useState({
     width: 1,
@@ -37,7 +39,7 @@ export function Textarea({ id, containerRef, onPointerDown }: Props) {
 
   return (
     <div
-      className="absolute select-none"
+      className={`absolute select-none ${toolMode === "select" ? "cursor-move" : ""}`}
       style={{ transform: `translate(${scaledX}px, ${scaledY}px)` }}
       onPointerDown={(e) => onPointerDown(e, id)}
       contentEditable={false}
