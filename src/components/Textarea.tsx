@@ -7,11 +7,22 @@ type Props = {
   id: string;
   containerRef: RefObject<HTMLDivElement | null>;
   toolMode: ToolMode;
-  onPointerDown: (e: React.PointerEvent<HTMLDivElement>, id: string) => void;
+  currentSlide: number;
+  onPointerDown: (
+    e: React.PointerEvent<HTMLTextAreaElement>,
+    id: string,
+  ) => void;
 };
 
-export function Textarea({ id, containerRef, toolMode, onPointerDown }: Props) {
-  const { x, y, content } = useStorage((root) => root.textAreas.get(id)) ?? {};
+export function Textarea({
+  id,
+  containerRef,
+  toolMode,
+  currentSlide,
+  onPointerDown,
+}: Props) {
+  const { x, y, content, slide } =
+    useStorage((root) => root.textAreas.get(id)) ?? {};
   const [containerDimensions, setContainerDimensions] = useState({
     width: 1,
     height: 1,
@@ -37,14 +48,18 @@ export function Textarea({ id, containerRef, toolMode, onPointerDown }: Props) {
   const scaledX = (x ?? 0) * containerDimensions.width;
   const scaledY = (y ?? 0) * containerDimensions.height;
 
+  if (slide !== currentSlide) {
+    return;
+  }
+
   return (
-    <div
+    <textarea
       className={`absolute select-none ${toolMode === "select" ? "cursor-move" : ""}`}
       style={{ transform: `translate(${scaledX}px, ${scaledY}px)` }}
       onPointerDown={(e) => onPointerDown(e, id)}
-      contentEditable={false}
+      readOnly={toolMode === "text"}
     >
       {content}
-    </div>
+    </textarea>
   );
 }

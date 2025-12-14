@@ -76,6 +76,7 @@ export function PresentationEditor({ initialSlide }: Props) {
         x: (e.clientX - rect.left) / rect.width,
         y: (e.clientY - rect.top) / rect.height,
         content: "foo " + id,
+        slide: currentSlide,
       });
       storage.get("textAreas").set(id, newTextArea);
       setMyPresence({ selectedTextAreaId: id });
@@ -97,7 +98,7 @@ export function PresentationEditor({ initialSlide }: Props) {
   const onTextAreaPointerDown = useMutation(
     (
       { storage, setMyPresence },
-      e: React.PointerEvent<HTMLDivElement>,
+      e: React.PointerEvent<HTMLTextAreaElement>,
       textAreaId: string,
     ) => {
       history.pause();
@@ -236,6 +237,7 @@ export function PresentationEditor({ initialSlide }: Props) {
                   id={id}
                   containerRef={slidesRef}
                   toolMode={toolMode}
+                  currentSlide={currentSlide}
                   onPointerDown={onTextAreaPointerDown}
                 />
               );

@@ -7,6 +7,7 @@ type TextArea = LiveObject<{
   x: number;
   y: number;
   content: string;
+  slide: number;
 }>;
 
 type TextAreaId = string;
