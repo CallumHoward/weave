@@ -3,6 +3,7 @@
     "**/*.ts",
     "**/*.tsx",
     "eslint.config.ts",
+    "liveblocks.config.ts",
     "prettier.config.ts",
     "vite.config.ts"
   ],

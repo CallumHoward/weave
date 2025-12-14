@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlidesSlugRouteImport } from './routes/slides/[slug]'
+import { Route as PPresentationIdRouteImport } from './routes/p/$presentationId'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -28,34 +29,43 @@ const SlidesSlugRoute = SlidesSlugRouteImport.update({
   path: '/slides/slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PPresentationIdRoute = PPresentationIdRouteImport.update({
+  id: '/p/$presentationId',
+  path: '/p/$presentationId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/p/$presentationId': typeof PPresentationIdRoute
   '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/p/$presentationId': typeof PPresentationIdRoute
   '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/p/$presentationId': typeof PPresentationIdRoute
   '/slides/slug': typeof SlidesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/slides/slug'
+  fullPaths: '/' | '/login' | '/p/$presentationId' | '/slides/slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/slides/slug'
-  id: '__root__' | '/' | '/login' | '/slides/slug'
+  to: '/' | '/login' | '/p/$presentationId' | '/slides/slug'
+  id: '__root__' | '/' | '/login' | '/p/$presentationId' | '/slides/slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  PPresentationIdRoute: typeof PPresentationIdRoute
   SlidesSlugRoute: typeof SlidesSlugRoute
 }
 
@@ -82,12 +92,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlidesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/p/$presentationId': {
+      id: '/p/$presentationId'
+      path: '/p/$presentationId'
+      fullPath: '/p/$presentationId'
+      preLoaderRoute: typeof PPresentationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  PPresentationIdRoute: PPresentationIdRoute,
   SlidesSlugRoute: SlidesSlugRoute,
 }
 export const routeTree = rootRouteImport

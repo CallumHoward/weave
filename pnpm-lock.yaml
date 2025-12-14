@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@liveblocks/client':
+        specifier: ^3.11.1
+        version: 3.11.1(@types/json-schema@7.0.15)
+      '@liveblocks/react':
+        specifier: ^3.11.1
+        version: 3.11.1(@types/json-schema@7.0.15)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(react@19.2.0)
       '@radix-ui/react-avatar':
         specifier: ^1.1.11
         version: 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -617,6 +623,26 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@liveblocks/client@3.11.1':
+    resolution: {integrity: sha512-LsVNUJeZDNfWfCmGWAIn0ulpCWfL0KSciVA2jfTxFrMueMBEZR+rMrg8zRNG8taG0SNO+hm735GnNdnHUn9hDA==}
+
+  '@liveblocks/core@3.11.1':
+    resolution: {integrity: sha512-YAbOjoLZsN0G8e3EjcDeXsC771dFzymiuCwXV60B2kNN+rMvq6l2xZDpRvoNiDCqHg/4CThoWEVAl8OqvQ6j9g==}
+    peerDependencies:
+      '@types/json-schema': ^7
+
+  '@liveblocks/react@3.11.1':
+    resolution: {integrity: sha512-M48L8LaxA3vVPsFHOhcwVPkyGH/FuoYhl88KIvo9D734KlGbjpK8h+L0bjkAc6/+jmh1PHdn1m0zBq4rRNTTeA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^18 || ^19 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
 
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
@@ -4293,6 +4319,27 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@liveblocks/client@3.11.1(@types/json-schema@7.0.15)':
+    dependencies:
+      '@liveblocks/core': 3.11.1(@types/json-schema@7.0.15)
+    transitivePeerDependencies:
+      - '@types/json-schema'
+
+  '@liveblocks/core@3.11.1(@types/json-schema@7.0.15)':
+    dependencies:
+      '@types/json-schema': 7.0.15
+
+  '@liveblocks/react@3.11.1(@types/json-schema@7.0.15)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(react@19.2.0)':
+    dependencies:
+      '@liveblocks/client': 3.11.1(@types/json-schema@7.0.15)
+      '@liveblocks/core': 3.11.1(@types/json-schema@7.0.15)
+      react: 19.2.0
+    optionalDependencies:
+      '@types/react': 19.2.5
+      '@types/react-dom': 19.2.3(@types/react@19.2.5)
+    transitivePeerDependencies:
+      - '@types/json-schema'
 
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
