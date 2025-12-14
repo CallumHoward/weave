@@ -8,7 +8,7 @@ export const columns: Array<ColumnDef<PresentationItem>> = [
   },
   {
     accessorKey: "author",
-    header: "Created by",
+    header: "Author",
   },
   {
     accessorKey: "createdAt",
