@@ -32,6 +32,7 @@ export function PresentationEditor({ initialSlide }: Props) {
 
   // Component local state
   const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [toolMode, setToolMode] = useState<ToolMode>("select");
   const [currentSlide, setCurrentSlide] = useState(initialSlide);
   const [slidesDimensions, setSlidesDimensions] = useState({
@@ -95,16 +96,29 @@ export function PresentationEditor({ initialSlide }: Props) {
   // Dragging and selection
   const onTextAreaPointerDown = useMutation(
     (
-      { setMyPresence },
+      { storage, setMyPresence },
       e: React.PointerEvent<HTMLDivElement>,
       textAreaId: string,
     ) => {
       history.pause();
       e.stopPropagation();
       setMyPresence({ selectedTextAreaId: textAreaId }, { addToHistory: true });
+
+      // Calculate offset from textarea position to cursor
+      const textArea = storage.get("textAreas").get(textAreaId);
+      if (textArea && slidesRef.current) {
+        const rect = slidesRef.current.getBoundingClientRect();
+        const cursorX = (e.clientX - rect.left) / rect.width;
+        const cursorY = (e.clientY - rect.top) / rect.height;
+        setDragOffset({
+          x: cursorX - textArea.get("x"),
+          y: cursorY - textArea.get("y"),
+        });
+      }
+
       setIsDragging(true);
     },
-    [setIsDragging, history],
+    [setIsDragging, setDragOffset, history],
   );
 
   const onCanvasPointerUp = useMutation(
@@ -139,7 +153,6 @@ export function PresentationEditor({ initialSlide }: Props) {
       if (!isDragging) {
         return;
       }
-      console.log("LOG Stage 1: PresentationEditor.tsx:142");
 
       const textAreaId = self.presence.selectedTextAreaId;
       if (!textAreaId) {
@@ -148,13 +161,15 @@ export function PresentationEditor({ initialSlide }: Props) {
 
       const textArea = storage.get("textAreas").get(textAreaId);
       if (textArea) {
+        const cursorX = (e.clientX - rect.left) / rect.width;
+        const cursorY = (e.clientY - rect.top) / rect.height;
         textArea.update({
-          x: (e.clientX - rect.left) / rect.width,
-          y: (e.clientY - rect.top) / rect.height,
+          x: cursorX - dragOffset.x,
+          y: cursorY - dragOffset.y,
         });
       }
     },
-    [isDragging],
+    [isDragging, dragOffset],
   );
 
   const handleScrollEnd = useCallback((e: React.UIEvent<HTMLDivElement>) => {
@@ -219,7 +234,7 @@ export function PresentationEditor({ initialSlide }: Props) {
                 <Textarea
                   key={id}
                   id={id}
-                  containerDimensions={slidesDimensions}
+                  containerRef={slidesRef}
                   onPointerDown={onTextAreaPointerDown}
                 />
               );
