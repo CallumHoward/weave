@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { useHistory } from "@liveblocks/react";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import type { ComponentPropsWithoutRef } from "react";
@@ -35,6 +36,7 @@ export function FormattingToolbar({
   className,
   ...props
 }: Props) {
+  const history = useHistory();
   return (
     <div
       role="toolbar"
@@ -58,7 +60,7 @@ export function FormattingToolbar({
           </Link>
         )}
       </Button>
-      <p className="px-2 text-sm">
+      <p className="px-2 text-sm text-nowrap">
         {currentSlide} / {totalSlides}
       </p>
       <Button
@@ -92,10 +94,22 @@ export function FormattingToolbar({
       </ButtonGroup>
 
       <ButtonGroup role="group" aria-label="History">
-        <Button variant="outline" size="icon" aria-label="Undo" title="Undo">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => history.undo()}
+          aria-label="Undo"
+          title="Undo"
+        >
           <Undo />
         </Button>
-        <Button variant="outline" size="icon" aria-label="Redo" title="Redo">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => history.redo()}
+          aria-label="Redo"
+          title="Redo"
+        >
           <Redo />
         </Button>
       </ButtonGroup>

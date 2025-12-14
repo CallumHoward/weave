@@ -75,7 +75,7 @@ export function PresentationEditor({ initialSlide }: Props) {
       const newTextArea = new LiveObject({
         x: (e.clientX - rect.left - rect.width / 2) / rect.width,
         y: (e.clientY - rect.top - rect.height / 2) / rect.height,
-        content: "bar",
+        content: "",
         slide: currentSlide,
       });
       storage.get("textAreas").set(id, newTextArea);

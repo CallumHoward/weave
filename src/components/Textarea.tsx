@@ -1,4 +1,4 @@
-import { useSelf, useStorage } from "@liveblocks/react";
+import { useMutation, useSelf, useStorage } from "@liveblocks/react";
 import { useEffect, useState } from "react";
 import { Textarea as BaseTextarea } from "./ui/textarea";
 import type { RefObject } from "react";
@@ -32,6 +32,16 @@ export function Textarea({
     height: 1,
   });
 
+  const updateContent = useMutation(
+    ({ storage }, newContent: string) => {
+      const textArea = storage.get("textAreas").get(id);
+      if (textArea) {
+        textArea.set("content", newContent);
+      }
+    },
+    [id],
+  );
+
   useEffect(() => {
     const slidesElement = containerRef.current;
 
@@ -63,10 +73,10 @@ export function Textarea({
       onPointerDown={(e) => onPointerDown(e, id)}
       onClick={(e) => e.stopPropagation()}
       onBlur={onBlur}
+      onChange={(e) => updateContent(e.target.value)}
       placeholder="Your text here"
       readOnly={toolMode !== "text"}
-    >
-      {content}
-    </BaseTextarea>
+      value={content ?? ""}
+    />
   );
 }
