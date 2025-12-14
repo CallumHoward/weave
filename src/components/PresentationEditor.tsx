@@ -25,7 +25,9 @@ export function PresentationEditor({ initialSlide }: Props) {
   }, [currentSlide, navigate, updateMyPresence]);
 
   useEffect(() => {
-    if (!slidesRef.current) return;
+    if (!slidesRef.current) {
+      return;
+    }
 
     const updateDimensions = () => {
       if (slidesRef.current) {
@@ -89,18 +91,16 @@ export function PresentationEditor({ initialSlide }: Props) {
 
         {others
           .filter(({ presence }) => presence.slide === currentSlide)
-          .map(({ connectionId, presence, id }) => {
-            if (!presence.cursor) return null;
-
-            return (
+          .map(({ connectionId, presence, id }) =>
+            presence.cursor ? (
               <Cursor
                 key={connectionId}
                 x={presence.cursor.x * slidesDimensions.width}
                 y={presence.cursor.y * slidesDimensions.height}
                 color={getCursorColor(id)}
               />
-            );
-          })}
+            ) : null,
+          )}
       </div>
     </div>
   );
