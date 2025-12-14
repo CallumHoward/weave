@@ -3,7 +3,7 @@ import {
   LiveblocksProvider,
   RoomProvider,
 } from "@liveblocks/react/suspense";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useLocation } from "@tanstack/react-router";
 import type { PresentationItem } from "@/types/presentation-item";
 import { Header } from "@/components/Header";
 import { PresentationEditor } from "@/components/PresentationEditor";
@@ -30,6 +30,9 @@ export const Route = createFileRoute("/p/$presentationId")({
 
 function RouteComponent() {
   const { presentation, error } = Route.useLoaderData();
+  const location = useLocation();
+
+  const slide = Number.parseInt(location.hash.replace("#", ""));
 
   return (
     <div className="flex flex-1 flex-col gap-8 p-8 w-full max-w-[1200px]">
@@ -41,10 +44,10 @@ function RouteComponent() {
           <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"}>
             <RoomProvider
               id={presentation.id}
-              initialPresence={{ cursor: null }}
+              initialPresence={{ cursor: null, slide }}
             >
               <ClientSideSuspense fallback={<div>Loading…</div>}>
-                <PresentationEditor />
+                <PresentationEditor initialSlide={slide} />
               </ClientSideSuspense>
             </RoomProvider>
           </LiveblocksProvider>
