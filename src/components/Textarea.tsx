@@ -1,4 +1,4 @@
-import { useStorage } from "@liveblocks/react";
+import { useSelf, useStorage } from "@liveblocks/react";
 import { useEffect, useState } from "react";
 import { Textarea as BaseTextarea } from "./ui/textarea";
 import type { RefObject } from "react";
@@ -26,6 +26,7 @@ export function Textarea({
 }: Props) {
   const { x, y, content, slide } =
     useStorage((root) => root.textAreas.get(id)) ?? {};
+  const isSelected = useSelf((me) => me.presence.selectedTextAreaId === id);
   const [containerDimensions, setContainerDimensions] = useState({
     width: 1,
     height: 1,
@@ -57,7 +58,7 @@ export function Textarea({
 
   return (
     <BaseTextarea
-      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""}`}
+      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""} ${isSelected ? "" : "border-transparent focus:border-input"}`}
       style={{ transform: `translate(${scaledX}px, ${scaledY}px)` }}
       onPointerDown={(e) => onPointerDown(e, id)}
       onClick={(e) => e.stopPropagation()}

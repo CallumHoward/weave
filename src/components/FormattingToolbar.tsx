@@ -10,6 +10,7 @@ import {
   Undo,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import type { ComponentPropsWithoutRef } from "react";
@@ -133,7 +134,16 @@ export function FormattingToolbar({
       </ButtonGroup>
 
       <ButtonGroup role="group" aria-label="Share">
-        <Button variant="outline" size="icon" aria-label="Share" title="Share">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            navigator.clipboard.writeText(globalThis.location.href);
+            toast.success("Share-able link copied to clipboard");
+          }}
+          aria-label="Share"
+          title="Share"
+        >
           <Share />
         </Button>
       </ButtonGroup>
