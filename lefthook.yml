@@ -1,9 +1,10 @@
 pre-commit:
   parallel: true
   jobs:
-    - run: pnpm lint --fix {staged_files}
+    - run: pnpm eslint --quiet --fix '{staged_files}'
       glob: "*.{ts,tsx}"
-    - run: pnpm format --write {staged_files}
-      glob: "*.{ts,tsx}"
+      stage_fixed: true
+    - run: pnpm prettier --ignore-unknown --write '{staged_files}'
+      stage_fixed: true
     - run: pnpm check
       glob: "*.{ts,tsx}"
