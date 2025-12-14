@@ -78,9 +78,10 @@ export function Textarea({
 
   return (
     <BaseTextarea
-      className={`absolute w-fit select-none ${toolMode === "select" ? "cursor-move" : ""} ${isSelectedByMe && !otherUserWithSelection ? "" : otherUserWithSelection ? "border-2" : "border-transparent focus:border-input"}`}
+      className={`absolute resize-none w-fit select-none ${toolMode === "select" ? "cursor-move" : ""} ${isSelectedByMe && !otherUserWithSelection ? "" : otherUserWithSelection ? "border-2" : "border-transparent focus:border-input"}`}
       style={{
         transform: `translate(${scaledX}px, ${scaledY}px)`,
+        fontSize: "48px",
         borderColor,
       }}
       onPointerDown={(e) => onPointerDown(e, id)}
