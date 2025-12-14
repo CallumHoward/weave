@@ -33,7 +33,7 @@ function RouteComponent() {
   const { presentation, error } = Route.useLoaderData();
   const location = useLocation();
 
-  const slide = Number.parseInt(location.hash.replace("#", ""));
+  const slide = Number.parseInt(location.hash.replace("#", "")) || 1;
 
   return (
     <div className="flex flex-1 flex-col gap-8 p-8 w-full max-w-[1200px]">

@@ -81,7 +81,7 @@ export function PresentationEditor({ initialSlide }: Props) {
       storage.get("textAreas").set(id, newTextArea);
       setMyPresence({ selectedTextAreaId: id });
     },
-    [],
+    [currentSlide],
   );
 
   const deleteTextArea = useMutation(({ storage, self, setMyPresence }) => {
@@ -190,12 +190,12 @@ export function PresentationEditor({ initialSlide }: Props) {
     [insertTextArea, toolMode],
   );
 
-  const totalSlides = 10;
+  const totalSlides = 5;
 
   return (
     <div
       id="canvas"
-      className="relative flex flex-1 min-h-0 w-full bg-gray-50 overflow-hidden items-center justify-center"
+      className="relative flex flex-1 min-h-0 w-full bg-gray-200 overflow-hidden items-center justify-center"
     >
       <FormattingToolbar
         className="absolute top-4 left-1/2 -translate-x-1/2"
@@ -225,7 +225,7 @@ export function PresentationEditor({ initialSlide }: Props) {
           <section
             key={i}
             id={(i + 1).toString()}
-            className="flex items-center justify-center aspect-4/3 w-full max-h-full shrink-0 snap-center bg-gray-400"
+            className="flex items-center justify-center aspect-4/3 w-full max-h-full shrink-0 snap-center bg-gray-100"
             aria-label={`Slide ${i + 1} of ${totalSlides}`}
             aria-roledescription="slide"
           >
